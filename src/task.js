@@ -2,10 +2,11 @@ import { parse } from "date-fns";
 
 export class Task {
   constructor(title, dueDate = "", priority = "", description = "None") {
+    this._id = crypto.randomUUID();
     this.title = title;
     this.dueDate = dueDate;
     this.priority = priority;
-    this._description = description;
+    this.description = description;
   }
 
   set title(title) {
@@ -40,5 +41,13 @@ export class Task {
 
   get dueDate() {
     return this._dueDate;
+  }
+
+  set description(description) {
+    this._description = description;
+  }
+
+  get description() {
+    return this._description;
   }
 }
