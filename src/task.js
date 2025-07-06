@@ -1,18 +1,18 @@
+import { parse } from "date-fns";
+
 export class Task {
   constructor(
     title,
     dueDate = "",
-    description = "None",
     priority = "",
-    notes = "None"
+    description = "None"
   ) {
     this.title = title;
-    this._description = description;
-    this._dueDate = dueDate;
+    this.dueDate = dueDate;
     this.priority = priority;
-    this._notes = notes;
+    this._description = description;
 
-    console.log(this.title, this._dueDate);
+    console.log(this.title, this.dueDate);
   }
 
   set title(title) {
@@ -34,5 +34,13 @@ export class Task {
 
   get priority() {
     return this._priority;
+  }
+
+  set dueDate(dueDate) {
+    this._dueDate = parse(dueDate, 'dd/MM/yyyy', new Date())
+  }
+
+  get dueDate() {
+    return this._dueDate;
   }
 }
