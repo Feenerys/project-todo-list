@@ -7,4 +7,5 @@ console.log("Hello World");
 const newTask = new Task('ad','12/7/2025');
 const defaultProject = new Project('hel');
 defaultProject.addTask(newTask);
-console.log(defaultProject.tasks);
+defaultProject.removeTask(newTask);
+

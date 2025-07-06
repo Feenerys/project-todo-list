@@ -9,6 +9,10 @@ export class Task {
     this.description = description;
   }
 
+  get id() {
+    return this._id;
+  }
+
   set title(title) {
     if (title == "") throw new Error("You must enter a non empty title!");
     this._title = title;

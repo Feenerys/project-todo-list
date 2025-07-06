@@ -21,4 +21,11 @@ export class Project {
   get tasks() {
     return this._tasks;
   }
+
+  removeTask(task) {
+    this._tasks = this.tasks.filter((t) => {
+      t.id !== task.id;
+    });
+    console.log(`Removed task: ${task.title}`)
+  }
 }
