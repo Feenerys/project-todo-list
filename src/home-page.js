@@ -15,7 +15,7 @@ const renderProjects = (projects) => {
     projectItem.textContent = project.title;
 
     projectItem.addEventListener("click", () => {
-      resetTasks()
+      resetAllTasks()
       for (let task of project.tasks) {
         renderTask(task);
       }
