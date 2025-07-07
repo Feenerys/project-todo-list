@@ -1,4 +1,22 @@
 body {
   display: grid;
   grid-template-columns: minmax(230px, 1fr) minmax(500px, 8fr);
+  gap: 12px;
+  margin-right: 124px;
 }
+
+.project {
+  border: 1px black solid;
+}
+
+.project-container {
+  display: grid;
+  gap: 5px;
+}
+
+.task {
+  display: grid;
+  grid-template-columns: auto 2fr 1fr auto;
+}
+
+
