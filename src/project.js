@@ -15,6 +15,7 @@ export class Project {
   }
 
   addTask(task) {
+    // TODO: add a checker
     this._tasks.push(task);
   }
 
@@ -23,6 +24,7 @@ export class Project {
   }
 
   removeTask(task) {
+    // TODO: add a checker if task is valid
     this._tasks = this.tasks.filter((t) => {
       t.id !== task.id;
     });

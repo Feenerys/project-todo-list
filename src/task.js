@@ -7,10 +7,20 @@ export class Task {
     this.dueDate = dueDate;
     this.priority = priority;
     this.description = description;
+    this.status = false;
   }
 
   get id() {
     return this._id;
+  }
+
+  get status() {
+    return this._status;
+  }
+
+  set status(status) {
+    if (typeof status != "boolean") throw new Error("Task status must be a boolean True or False")
+    this._status = status
   }
 
   set title(title) {
