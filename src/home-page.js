@@ -35,6 +35,9 @@ const renderTask = (task) => {
   taskStatus.type = "checkbox";
   taskStatus.id = "task-status";
   taskItem.appendChild(taskStatus);
+  taskStatus.addEventListener("click", () => {
+    task.status = taskStatus.checked;
+  });
 
   const taskTitle = document.createElement("label");
   taskTitle.className = "task-title";
@@ -51,11 +54,13 @@ const renderTask = (task) => {
 
   const taskEditBtn = document.createElement("button");
   taskEditBtn.textContent = "Edit";
+  const taskEditDialog = renderTaskEdit();
   taskEditBtn.addEventListener("click", () => {
-    renderTaskEdit();
+    taskEditDialog.showModal();
   });
 
   taskItem.appendChild(taskEditBtn);
+  taskItem.appendChild(taskEditDialog);
 
   taskContainer.appendChild(taskItem);
 };
@@ -65,4 +70,16 @@ const resetAllTasks = () => {
   taskContainer.innerHTML = "";
 };
 
-const renderTaskEdit = () => {};
+const renderTaskEdit = () => {
+  const dialog = document.createElement("dialog");
+  dialog.className = "edit-task-btn";
+  const form = document.createElement("form");
+  dialog.appendChild(form);
+  const header = document.createElement("h3");
+  header.textContent = "Edit Task";
+  form.appendChild(header);
+  const closeButton = document.createElement("button");
+  closeButton.type = "button";
+  closeButton.textContent = "Close";
+  return dialog;
+};

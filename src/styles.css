@@ -20,3 +20,8 @@ body {
 }
 
 
+form {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
