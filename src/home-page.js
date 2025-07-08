@@ -56,13 +56,10 @@ const renderTask = (task) => {
   taskStatus.checked = task.status;
 
   const taskEditBtn = document.createElement("button");
-  taskEditBtn.textContent = "Edit";
-  taskEditBtn.addEventListener("click", () => {
-    const taskEditDialog = taskEdit(task);
-    taskItem.appendChild(taskEditDialog);
-    taskEditDialog.showModal();
-  });
+  taskEditBtn.textContent = "Show";
+  const taskEditDialog = taskEdit(task, taskEditBtn);
 
+  taskItem.appendChild(taskEditDialog);
   taskItem.appendChild(taskEditBtn);
 
   taskContainer.appendChild(taskItem);
@@ -70,15 +67,15 @@ const renderTask = (task) => {
 
 const removeTask = (task) => {
   const taskItem = document.querySelector(`[data-task-id="${task.id}"]`);
-  taskItem.remove()
-}
+  taskItem.remove();
+};
 
 const resetAllTasks = () => {
   const taskContainer = document.querySelector(".task-container");
   taskContainer.innerHTML = "";
 };
 
-const taskEdit = (task) => {
+const taskEdit = (task, editButton) => {
   const dialog = document.createElement("dialog");
   dialog.className = "edit-task-btn";
   const form = document.createElement("form");
@@ -96,6 +93,16 @@ const taskEdit = (task) => {
     dialog.close();
   });
 
+  const statusLabel = document.createElement("label");
+  statusLabel.textContent = "Status:";
+  statusLabel.htmlFor = "task-status-edit";
+  form.appendChild(statusLabel);
+  const status = document.createElement("input");
+  status.type = "checkbox";
+  status.name = "status";
+  status.id = "task-status-edit";
+  form.appendChild(status);
+
   const titleLabel = document.createElement("label");
   titleLabel.textContent = "Title:";
   titleLabel.htmlFor = "task-title-edit";
@@ -103,7 +110,6 @@ const taskEdit = (task) => {
   const title = document.createElement("input");
   title.id = "task-title-edit";
   title.name = "title";
-  title.value = task.title;
   form.appendChild(title);
 
   const dueDateLabel = document.createElement("label");
@@ -114,7 +120,7 @@ const taskEdit = (task) => {
   dueDate.id = "task-due-date-edit";
   dueDate.name = "due-date";
   dueDate.type = "date";
-  dueDate.value = format(task.dueDate, "yyyy-MM-dd");
+
   form.appendChild(dueDate);
 
   const priorityLabel = document.createElement("label");
@@ -136,13 +142,11 @@ const taskEdit = (task) => {
   optHigh.textContent = "High";
   optNone.value = "";
   optNone.textContent = "None";
-
   priority.appendChild(optLow);
   priority.appendChild(optMed);
   priority.appendChild(optHigh);
   priority.appendChild(optNone);
 
-  priority.value = task.priority;
   form.appendChild(priority);
 
   const descriptionLabel = document.createElement("label");
@@ -152,7 +156,6 @@ const taskEdit = (task) => {
   const description = document.createElement("textarea");
   description.id = "task-description-edit";
   description.name = "description";
-  description.value = task.description;
   form.appendChild(description);
 
   const saveButton = document.createElement("button");
@@ -161,15 +164,16 @@ const taskEdit = (task) => {
   saveButton.textContent = "Save";
   form.appendChild(saveButton);
   saveButton.addEventListener("click", (event) => {
+    task.status = status.checked;
     task.title = title.value;
     task.dueDate = dueDate.value;
     task.priority = priority.value;
     task.description = description.value;
-    dialog.close()
+    dialog.close();
     removeTask(task);
     renderTask(task);
     event.preventDefault();
-  })
+  });
 
   const deleteButton = document.createElement("button");
   deleteButton.type = "button";
@@ -179,8 +183,18 @@ const taskEdit = (task) => {
   deleteButton.addEventListener("click", () => {
     removeTask(task);
     dialog.close();
-  })
+  });
 
   form.appendChild(closeButton);
+
+  editButton.addEventListener("click", () => {
+    status.checked = task.status;
+    title.value = task.title;
+    dueDate.value = format(task.dueDate, "yyyy-MM-dd");
+    priority.value = task.priority;
+    description.value = task.description;
+    dialog.showModal();
+  });
+
   return dialog;
 };
