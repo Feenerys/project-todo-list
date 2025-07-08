@@ -12,5 +12,10 @@ export default defineConfig([
 			"no-unused-vars": "warn",
 			"no-undef": "warn",
 		},
+    languageOptions: {
+			globals: {
+				...globals.browser,
+			},
+		},
 	},
 ]);
