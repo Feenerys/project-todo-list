@@ -71,7 +71,7 @@ const resetAllTasks = () => {
 };
 
 const renderTaskEdit = () => {
-  const dialog = document.createElement("dialog")
+  const dialog = document.createElement("dialog");
   dialog.className = "edit-task-btn";
   const form = document.createElement("form");
   dialog.appendChild(form);

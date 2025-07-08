@@ -19,8 +19,9 @@ export class Task {
   }
 
   set status(status) {
-    if (typeof status != "boolean") throw new Error("Task status must be a boolean True or False")
-    this._status = status
+    if (typeof status != "boolean")
+      throw new Error("Task status must be a boolean True or False");
+    this._status = status;
   }
 
   set title(title) {

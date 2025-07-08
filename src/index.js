@@ -35,4 +35,3 @@ addProjectBtn.addEventListener("click", () => {
 closeProjectDialog.addEventListener("click", () => {
   addProjectDialog.close();
 });
-

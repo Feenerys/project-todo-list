@@ -19,7 +19,6 @@ body {
   grid-template-columns: auto 2fr 1fr auto;
 }
 
-
 form {
   display: grid;
   justify-items: center;
