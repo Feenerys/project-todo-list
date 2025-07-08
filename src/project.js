@@ -1,7 +1,12 @@
 export class Project {
   constructor(title) {
+    this._id = crypto.randomUUID();
     this.title = title;
     this._tasks = [];
+  }
+
+  get id() {
+    return this._id;
   }
 
   set title(title) {

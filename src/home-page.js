@@ -1,11 +1,11 @@
 import { format } from "date-fns";
 
-export const RenderPage = (projects) => {
+export const RenderPage = (projects, currentProjectId) => {
   for (let project of projects) {
-    renderProject(project);
+    renderProject(project, currentProjectId);
   }
-
-  for (let task of projects[0].tasks) {
+  const currentProject = projects.find((n) => n.id == currentProjectId);
+  for (let task of currentProject.tasks) {
     renderTask(task);
   }
 };
@@ -25,6 +25,7 @@ export const renderProject = (project) => {
   });
 
   projectContainer.appendChild(projectItem);
+  return project.id;
 };
 
 export const renderTask = (task) => {
@@ -110,6 +111,7 @@ const taskEdit = (task, editButton) => {
   const title = document.createElement("input");
   title.id = "task-title-edit";
   title.name = "title";
+  title.required = true;
   form.appendChild(title);
 
   const dueDateLabel = document.createElement("label");
@@ -120,6 +122,7 @@ const taskEdit = (task, editButton) => {
   dueDate.id = "task-due-date-edit";
   dueDate.name = "due-date";
   dueDate.type = "date";
+  dueDate.required = true;
 
   form.appendChild(dueDate);
 
@@ -163,7 +166,7 @@ const taskEdit = (task, editButton) => {
   saveButton.className = "task-submit-edit-btn";
   saveButton.textContent = "Save";
   form.appendChild(saveButton);
-  saveButton.addEventListener("click", (event) => {
+  form.addEventListener("submit", (event) => {
     task.status = status.checked;
     task.title = title.value;
     task.dueDate = dueDate.value;
@@ -198,5 +201,3 @@ const taskEdit = (task, editButton) => {
 
   return dialog;
 };
-
-

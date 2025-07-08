@@ -12,7 +12,8 @@ const newProject = new Project("Project 2");
 defaultProject.addTask(newTask);
 
 const projects = [defaultProject, newProject];
-RenderHomePage(projects);
+const currentProjectId = defaultProject.id;
+RenderHomePage(projects, currentProjectId);
 
 const addTaskBtn = () => {
   const openDialogBtn = document.querySelector(".add-task-btn");
@@ -36,9 +37,10 @@ const addTaskBtn = () => {
     addTaskDialog.showModal();
   });
 
-  const addNewTaskBtn = document.querySelector(".new-task-create");
+  const addNewTaskForm = document.querySelector(".add-new-task-form");
 
-  addNewTaskBtn.addEventListener("click", (event) => {
+  addNewTaskForm.addEventListener("submit", (event) => {
+    event.preventDefault();
     const task = new Task(
       newTaskTitle.value,
       newTaskDueDate.value,
@@ -48,7 +50,6 @@ const addTaskBtn = () => {
     defaultProject.addTask(task);
     addTaskDialog.close();
     renderTask(task);
-    event.preventDefault();
   });
 };
 
