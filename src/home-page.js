@@ -1,10 +1,10 @@
 import { format } from "date-fns";
 
-export const RenderPage = (projects, currentProjectId) => {
+export const RenderPage = (projects, currentProject) => {
   for (let project of projects) {
-    renderProject(project, currentProjectId);
+    renderProject(project);
   }
-  const currentProject = projects.find((n) => n.id == currentProjectId);
+  
   for (let task of currentProject.tasks) {
     renderTask(task);
   }
@@ -68,6 +68,7 @@ export const renderTask = (task) => {
 
 const removeTask = (task) => {
   const taskItem = document.querySelector(`[data-task-id="${task.id}"]`);
+  
   taskItem.remove();
 };
 

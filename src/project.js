@@ -30,9 +30,7 @@ export class Project {
 
   removeTask(task) {
     // TODO: add a checker if task is valid
-    this._tasks = this.tasks.filter((t) => {
-      t.id !== task.id;
-    });
-    console.log(`Removed task: ${task.title}`);
+    this._tasks = this.tasks.filter((t) => t.id !== task.id);
+    console.log(`Removed task: ${task.id}`);
   }
 }

@@ -6,14 +6,17 @@ import { RenderPage as RenderHomePage, renderTask } from "./home-page";
 console.log("Hello World");
 
 const newTask = new Task("First Task", "2025-07-08");
+const newTask1 = new Task("First Task1", "2025-07-08");
 const defaultProject = new Project("Inbox");
 const newProject = new Project("Project 2");
 
 defaultProject.addTask(newTask);
+defaultProject.addTask(newTask1);
+
 
 const projects = [defaultProject, newProject];
-const currentProjectId = defaultProject.id;
-RenderHomePage(projects, currentProjectId);
+const currentProject = projects[0];
+RenderHomePage(projects, currentProject);
 
 const addTaskBtn = () => {
   const openDialogBtn = document.querySelector(".add-task-btn");
@@ -55,13 +58,20 @@ const addTaskBtn = () => {
 
 addTaskBtn();
 
-const addProjectBtn = document.querySelector(".add-project-btn");
-const addProjectDialog = document.querySelector(".add-project");
-const closeProjectDialog = document.querySelector(".close-new-project");
-addProjectBtn.addEventListener("click", () => {
-  addProjectDialog.showModal();
-});
+const addProjectBtn = () => {
+  const openDialogBtn = document.querySelector(".add-project-btn");
+  const addProjectDialog = document.querySelector(".add-project");
+  const closeDialogBtn = document.querySelector(".close-new-project");
+  const addProjectForm = document.querySelector(".add-new-project-form");
+  openDialogBtn.addEventListener("click", () => {
+    addProjectDialog.showModal();
+  });
 
-closeProjectDialog.addEventListener("click", () => {
-  addProjectDialog.close();
-});
+  closeDialogBtn.addEventListener("click", () => {
+    addProjectDialog.close();
+  });
+
+  addProjectForm.addEventListener("submit", () => {});
+};
+
+addProjectBtn();
