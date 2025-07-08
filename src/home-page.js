@@ -27,7 +27,7 @@ export const renderProject = (project) => {
   projectContainer.appendChild(projectItem);
 };
 
-const renderTask = (task) => {
+export const renderTask = (task) => {
   const taskContainer = document.querySelector(".task-container");
 
   const taskItem = document.createElement("div");
@@ -198,3 +198,5 @@ const taskEdit = (task, editButton) => {
 
   return dialog;
 };
+
+

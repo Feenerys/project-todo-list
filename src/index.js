@@ -1,7 +1,7 @@
 import "./styles.css";
 import { Task } from "./task";
 import { Project } from "./project";
-import { RenderPage } from "./home-page";
+import { RenderPage as RenderHomePage, renderTask } from "./home-page";
 
 console.log("Hello World");
 
@@ -12,18 +12,47 @@ const newProject = new Project("Project 2");
 defaultProject.addTask(newTask);
 
 const projects = [defaultProject, newProject];
-RenderPage(projects);
+RenderHomePage(projects);
 
-const addTaskBtn = document.querySelector(".add-task-btn");
-const addTaskDialog = document.querySelector(".add-task");
-const closeTaskDialog = document.querySelector(".close-new-task");
-addTaskBtn.addEventListener("click", () => {
-  addTaskDialog.showModal();
-});
+const addTaskBtn = () => {
+  const openDialogBtn = document.querySelector(".add-task-btn");
+  const addTaskDialog = document.querySelector(".add-task");
+  const closeTaskDialog = document.querySelector(".close-new-task");
 
-closeTaskDialog.addEventListener("click", () => {
-  addTaskDialog.close();
-});
+  closeTaskDialog.addEventListener("click", () => {
+    addTaskDialog.close();
+  });
+
+  const newTaskTitle = document.querySelector("#new-task-title");
+  const newTaskDueDate = document.querySelector("#new-task-due-date");
+  const newTaskPriority = document.querySelector("#new-task-priority");
+  const newTaskDesc = document.querySelector("#new-task-desc");
+
+  openDialogBtn.addEventListener("click", () => {
+    newTaskTitle.value = "";
+    newTaskDueDate.value = "";
+    newTaskPriority.value = "";
+    newTaskDesc.value = "";
+    addTaskDialog.showModal();
+  });
+
+  const addNewTaskBtn = document.querySelector(".new-task-create");
+
+  addNewTaskBtn.addEventListener("click", (event) => {
+    const task = new Task(
+      newTaskTitle.value,
+      newTaskDueDate.value,
+      newTaskPriority.value,
+      newTaskDesc.value,
+    );
+    defaultProject.addTask(task);
+    addTaskDialog.close();
+    renderTask(task);
+    event.preventDefault();
+  });
+};
+
+addTaskBtn();
 
 const addProjectBtn = document.querySelector(".add-project-btn");
 const addProjectDialog = document.querySelector(".add-project");

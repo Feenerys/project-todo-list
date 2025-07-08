@@ -31,7 +31,16 @@
           <label for="new-task-title">Title:</label>
           <input id="new-task-title" type="text" />
           <label for="new-task-due-date">Due Date:</label>
-          <input type="text" id="new-task-due-date" />
+          <input type="date" id="new-task-due-date" />
+          <label for="new-task-priority">Priority:</label>
+          <select name="priority" id="new-task-priority">
+            <option value="">None</option>
+            <option value="Low">Low</option>
+            <option value="Med">Medium</option>
+            <option value="High">High</option>
+          </select>
+          <label for="new-task-desc">Description:</label>
+          <textarea name="description" id="new-task-desc"></textarea>
           <button type="submit" class="new-task-create">Add</button>
           <button type="button" autofocus class="close-new-task">Close</button>
         </form>
