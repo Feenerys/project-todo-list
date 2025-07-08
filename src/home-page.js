@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 export const RenderPage = (projects) => {
   for (let project of projects) {
     renderProject(project);
@@ -30,6 +32,7 @@ const renderTask = (task) => {
 
   const taskItem = document.createElement("div");
   taskItem.className = "task";
+  taskItem.dataset.taskId = task.id;
 
   const taskStatus = document.createElement("input");
   taskStatus.type = "checkbox";
@@ -54,23 +57,28 @@ const renderTask = (task) => {
 
   const taskEditBtn = document.createElement("button");
   taskEditBtn.textContent = "Edit";
-  const taskEditDialog = renderTaskEdit();
   taskEditBtn.addEventListener("click", () => {
+    const taskEditDialog = taskEdit(task);
+    taskItem.appendChild(taskEditDialog);
     taskEditDialog.showModal();
   });
 
   taskItem.appendChild(taskEditBtn);
-  taskItem.appendChild(taskEditDialog);
 
   taskContainer.appendChild(taskItem);
 };
+
+const removeTask = (task) => {
+  const taskItem = document.querySelector(`[data-task-id="${task.id}"]`);
+  taskItem.remove()
+}
 
 const resetAllTasks = () => {
   const taskContainer = document.querySelector(".task-container");
   taskContainer.innerHTML = "";
 };
 
-const renderTaskEdit = () => {
+const taskEdit = (task) => {
   const dialog = document.createElement("dialog");
   dialog.className = "edit-task-btn";
   const form = document.createElement("form");
@@ -81,5 +89,98 @@ const renderTaskEdit = () => {
   const closeButton = document.createElement("button");
   closeButton.type = "button";
   closeButton.textContent = "Close";
+  closeButton.autofocus = true;
+  closeButton.className = "close-edit-btn";
+
+  closeButton.addEventListener("click", () => {
+    dialog.close();
+  });
+
+  const titleLabel = document.createElement("label");
+  titleLabel.textContent = "Title:";
+  titleLabel.htmlFor = "task-title-edit";
+  form.appendChild(titleLabel);
+  const title = document.createElement("input");
+  title.id = "task-title-edit";
+  title.name = "title";
+  title.value = task.title;
+  form.appendChild(title);
+
+  const dueDateLabel = document.createElement("label");
+  dueDateLabel.textContent = "Due Date:";
+  dueDateLabel.htmlFor = "task-due-date-edit";
+  form.appendChild(dueDateLabel);
+  const dueDate = document.createElement("input");
+  dueDate.id = "task-due-date-edit";
+  dueDate.name = "due-date";
+  dueDate.type = "date";
+  dueDate.value = format(task.dueDate, "yyyy-MM-dd");
+  form.appendChild(dueDate);
+
+  const priorityLabel = document.createElement("label");
+  priorityLabel.textContent = "Priority:";
+  priorityLabel.htmlFor = "task-priority-edit";
+  form.appendChild(priorityLabel);
+  const priority = document.createElement("select");
+  priority.id = "task-priority-edit";
+  priority.name = "priority";
+  const optLow = document.createElement("option");
+  const optMed = document.createElement("option");
+  const optHigh = document.createElement("option");
+  const optNone = document.createElement("option");
+  optLow.value = "Low";
+  optLow.textContent = "Low";
+  optMed.value = "Med";
+  optMed.textContent = "Medium";
+  optHigh.value = "High";
+  optHigh.textContent = "High";
+  optNone.value = "";
+  optNone.textContent = "None";
+
+  priority.appendChild(optLow);
+  priority.appendChild(optMed);
+  priority.appendChild(optHigh);
+  priority.appendChild(optNone);
+
+  priority.value = task.priority;
+  form.appendChild(priority);
+
+  const descriptionLabel = document.createElement("label");
+  descriptionLabel.textContent = "Description:";
+  descriptionLabel.htmlFor = "task-description-edit";
+  form.appendChild(descriptionLabel);
+  const description = document.createElement("textarea");
+  description.id = "task-description-edit";
+  description.name = "description";
+  description.value = task.description;
+  form.appendChild(description);
+
+  const saveButton = document.createElement("button");
+  saveButton.type = "submit";
+  saveButton.className = "task-submit-edit-btn";
+  saveButton.textContent = "Save";
+  form.appendChild(saveButton);
+  saveButton.addEventListener("click", (event) => {
+    task.title = title.value;
+    task.dueDate = dueDate.value;
+    task.priority = priority.value;
+    task.description = description.value;
+    dialog.close()
+    removeTask(task);
+    renderTask(task);
+    event.preventDefault();
+  })
+
+  const deleteButton = document.createElement("button");
+  deleteButton.type = "button";
+  deleteButton.className = "task-delete-btn";
+  deleteButton.textContent = "Delete";
+  form.appendChild(deleteButton);
+  deleteButton.addEventListener("click", () => {
+    removeTask(task);
+    dialog.close();
+  })
+
+  form.appendChild(closeButton);
   return dialog;
 };

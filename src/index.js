@@ -5,7 +5,7 @@ import { RenderPage } from "./home-page";
 
 console.log("Hello World");
 
-const newTask = new Task("First Task", "12/7/2025");
+const newTask = new Task("First Task", "2025-07-08");
 const defaultProject = new Project("Inbox");
 const newProject = new Project("Project 2");
 

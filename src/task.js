@@ -1,7 +1,7 @@
 import { parse } from "date-fns";
 
 export class Task {
-  constructor(title, dueDate = "", priority = "", description = "None") {
+  constructor(title, dueDate = "", priority = "", description = "") {
     this._id = crypto.randomUUID();
     this.title = title;
     this.dueDate = dueDate;
@@ -51,7 +51,7 @@ export class Task {
   }
 
   set dueDate(dueDate) {
-    this._dueDate = parse(dueDate, "dd/MM/yyyy", new Date());
+    this._dueDate = parse(dueDate, "yyyy-MM-dd", new Date());
   }
 
   get dueDate() {
