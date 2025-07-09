@@ -1,7 +1,13 @@
 import { parse, format } from "date-fns";
 
 export class Task {
-  constructor(title, dueDate = "", priority = "", description = "", status = false) {
+  constructor(
+    title,
+    dueDate = "",
+    priority = "",
+    description = "",
+    status = false,
+  ) {
     this._id = crypto.randomUUID();
     this.title = title;
     this.dueDate = dueDate;
@@ -72,7 +78,7 @@ export class Task {
       dueDate: format(this.dueDate, "yyyy-MM-dd"),
       priority: this.priority,
       description: this.description,
-      status: this.status
-    }
+      status: this.status,
+    };
   }
 }

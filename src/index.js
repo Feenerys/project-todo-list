@@ -1,17 +1,7 @@
 import "./styles.css";
 import { Task } from "./task";
-import { Project } from "./project";
 import { ProjectDatabase } from "./project-database";
 import { RenderPage as RenderHomePage } from "./home-page";
-
-// const newTask = new Task("First Task", "2025-07-08");
-// const newTask1 = new Task("First Task1", "2025-07-08");
-// const defaultProject = new Project("Inbox");
-// const newProject = new Project("Project 2");
-
-// defaultProject.addTask(newTask);
-// defaultProject.addTask(newTask1);
-// newProject.addTask(newTask);
 
 const projectDatabase = new ProjectDatabase();
 RenderHomePage(projectDatabase);
@@ -51,6 +41,7 @@ const addTaskBtn = () => {
     projectDatabase.currentProject.addTask(task);
     addTaskDialog.close();
     RenderHomePage(projectDatabase);
+    projectDatabase.saveProjects();
   });
 };
 
@@ -76,6 +67,7 @@ const addProjectBtn = () => {
     projectDatabase.newProject(title.value);
     addProjectDialog.close();
     RenderHomePage(projectDatabase);
+    projectDatabase.saveProjects();
   });
 };
 

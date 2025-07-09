@@ -8,7 +8,7 @@ export const RenderPage = (projectDatabase) => {
 
   resetAllTasks();
   for (let task of projectDatabase.currentProject.tasks) {
-    renderTask(task, projectDatabase.currentProject);
+    renderTask(task, projectDatabase.currentProject, projectDatabase);
     // Potential bad practice here where in order to delete task
     // I have to pass the project into the task element to give to the
     // task remove function
@@ -84,6 +84,7 @@ const projectEdit = (project, projectDatabase) => {
     RenderPage(projectDatabase);
     dialog.close();
     event.preventDefault();
+    projectDatabase.saveProjects();
   });
 
   const deleteButton = document.createElement("button");
@@ -96,6 +97,7 @@ const projectEdit = (project, projectDatabase) => {
     projectDatabase.removeProject(project);
     RenderPage(projectDatabase);
     dialog.close();
+    projectDatabase.saveProjects();
   });
 
   form.appendChild(closeButton);
@@ -108,7 +110,7 @@ const resetProjects = () => {
   projectContainer.innerHTML = "";
 };
 
-const renderTask = (task, project) => {
+const renderTask = (task, project, projectDatabase) => {
   const taskContainer = document.querySelector(".task-container");
 
   const taskItem = document.createElement("div");
@@ -121,6 +123,7 @@ const renderTask = (task, project) => {
   taskItem.appendChild(taskStatus);
   taskStatus.addEventListener("click", () => {
     task.status = taskStatus.checked;
+    projectDatabase.saveProjects();
   });
 
   const taskTitle = document.createElement("label");
@@ -138,7 +141,7 @@ const renderTask = (task, project) => {
 
   const taskEditBtn = document.createElement("button");
   taskEditBtn.textContent = "Show";
-  const taskEditDialog = taskEdit(task, taskEditBtn, project);
+  const taskEditDialog = taskEdit(task, taskEditBtn, project, projectDatabase);
 
   taskItem.appendChild(taskEditDialog);
   taskItem.appendChild(taskEditBtn);
@@ -157,7 +160,7 @@ const resetAllTasks = () => {
   taskContainer.innerHTML = "";
 };
 
-const taskEdit = (task, editButton, project) => {
+const taskEdit = (task, editButton, project, projectDatabase) => {
   const dialog = document.createElement("dialog");
   dialog.className = "edit-task-btn";
   const form = document.createElement("form");
@@ -257,6 +260,7 @@ const taskEdit = (task, editButton, project) => {
     removeTask(task);
     renderTask(task);
     event.preventDefault();
+    projectDatabase.saveProjects();
   });
 
   const deleteButton = document.createElement("button");
@@ -267,6 +271,7 @@ const taskEdit = (task, editButton, project) => {
   deleteButton.addEventListener("click", () => {
     removeTask(task, project);
     dialog.close();
+    projectDatabase.saveProjects();
   });
 
   form.appendChild(closeButton);
