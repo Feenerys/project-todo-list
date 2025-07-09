@@ -6,7 +6,10 @@ export const RenderPage = (projects, currentProject) => {
   }
   
   for (let task of currentProject.tasks) {
-    renderTask(task);
+    renderTask(task, currentProject);
+    // Potential bad practice here where in order to delete task 
+    // I have to pass the project into the task element to give to the 
+    // task remove function
   }
 };
 
@@ -20,7 +23,7 @@ export const renderProject = (project) => {
   projectItem.addEventListener("click", () => {
     resetAllTasks();
     for (let task of project.tasks) {
-      renderTask(task);
+      renderTask(task, project);
     }
   });
 
@@ -28,7 +31,7 @@ export const renderProject = (project) => {
   return project.id;
 };
 
-export const renderTask = (task) => {
+export const renderTask = (task, project) => {
   const taskContainer = document.querySelector(".task-container");
 
   const taskItem = document.createElement("div");
@@ -58,7 +61,7 @@ export const renderTask = (task) => {
 
   const taskEditBtn = document.createElement("button");
   taskEditBtn.textContent = "Show";
-  const taskEditDialog = taskEdit(task, taskEditBtn);
+  const taskEditDialog = taskEdit(task, taskEditBtn, project);
 
   taskItem.appendChild(taskEditDialog);
   taskItem.appendChild(taskEditBtn);
@@ -66,10 +69,10 @@ export const renderTask = (task) => {
   taskContainer.appendChild(taskItem);
 };
 
-const removeTask = (task) => {
+const removeTask = (task, project) => {
   const taskItem = document.querySelector(`[data-task-id="${task.id}"]`);
-
   taskItem.remove();
+  project.removeTask(task);
 };
 
 const resetAllTasks = () => {
@@ -77,7 +80,7 @@ const resetAllTasks = () => {
   taskContainer.innerHTML = "";
 };
 
-const taskEdit = (task, editButton) => {
+const taskEdit = (task, editButton, project) => {
   const dialog = document.createElement("dialog");
   dialog.className = "edit-task-btn";
   const form = document.createElement("form");
@@ -185,7 +188,7 @@ const taskEdit = (task, editButton) => {
   deleteButton.textContent = "Delete";
   form.appendChild(deleteButton);
   deleteButton.addEventListener("click", () => {
-    removeTask(task);
+    removeTask(task, project);
     dialog.close();
   });
 
