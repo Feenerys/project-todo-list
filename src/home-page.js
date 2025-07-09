@@ -13,7 +13,7 @@ export const RenderPage = (projects, currentProject) => {
 export const renderProject = (project) => {
   const projectContainer = document.querySelector(".project-container");
 
-  const projectItem = document.createElement("div");
+  const projectItem = document.createElement("button");
   projectItem.className = "project";
   projectItem.textContent = project.title;
 
@@ -68,7 +68,7 @@ export const renderTask = (task) => {
 
 const removeTask = (task) => {
   const taskItem = document.querySelector(`[data-task-id="${task.id}"]`);
-  
+
   taskItem.remove();
 };
 
