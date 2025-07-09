@@ -10,7 +10,6 @@ export class ProjectDatabase {
       this.projects = projects;
       this.currentProject = projects[0];
     }
-    
   }
 
   newProject(title) {
@@ -18,7 +17,11 @@ export class ProjectDatabase {
   }
 
   removeProject(project) {
-    this._projects = this._projects.filter((n) => n.id != project.id);
+    this.projects = this.projects.filter((p) => {return p.id !== project.id});
+    if (this.currentProject == project) {
+      this.currentProject = this._projects[0];
+    }
+    console.log(this.projects);
   }
 
   set currentProject(project) {

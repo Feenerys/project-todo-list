@@ -1,10 +1,12 @@
 import { format } from "date-fns";
 
 export const RenderPage = (projectDatabase) => {
+  resetProjects();
   for (let project of projectDatabase.projects) {
     renderProject(project, projectDatabase);
   }
 
+  resetAllTasks();
   for (let task of projectDatabase.currentProject.tasks) {
     renderTask(task, projectDatabase.currentProject);
     // Potential bad practice here where in order to delete task
@@ -13,14 +15,25 @@ export const RenderPage = (projectDatabase) => {
   }
 };
 
-export const renderProject = (project, projectDatabase) => {
+const renderProject = (project, projectDatabase) => {
   const projectContainer = document.querySelector(".project-container");
 
-  const projectItem = document.createElement("button");
-  projectItem.className = "project";
-  projectItem.textContent = project.title;
+  const projectItem = document.createElement("div");
+  const projectBtn = document.createElement("button");
+  const projectEditBtn = document.createElement("button");
 
-  projectItem.addEventListener("click", () => {
+  projectItem.appendChild(projectBtn);
+  projectItem.appendChild(projectEditBtn);
+  projectItem.className = "project";
+  projectBtn.textContent = project.title;
+  projectEditBtn.textContent = "Edit";
+  projectEditBtn.addEventListener("click", () => {
+    const dialog = projectEdit(project, projectDatabase);
+    projectItem.appendChild(dialog);
+    dialog.showModal();
+  });
+
+  projectBtn.addEventListener("click", () => {
     resetAllTasks();
     projectDatabase.currentProject = project;
     for (let task of projectDatabase.currentProject.tasks) {
@@ -32,7 +45,56 @@ export const renderProject = (project, projectDatabase) => {
   return project.id;
 };
 
-export const renderTask = (task, project) => {
+const projectEdit = (project, projectDatabase) => {
+  const dialog = document.createElement("dialog");
+  dialog.className = "edit-project";
+  const form = document.createElement("form");
+  dialog.appendChild(form);
+  const header = document.createElement("h3");
+  header.textContent = `Edit ${project.title}`;
+  form.appendChild(header);
+  const closeButton = document.createElement("button");
+  closeButton.type = "button";
+  closeButton.textContent = "Close";
+  closeButton.autofocus = true;
+  closeButton.className = "close-edit-btn";
+
+  closeButton.addEventListener("click", () => {
+    dialog.close();
+  });
+
+  const titleLabel = document.createElement("label");
+  titleLabel.textContent = "Title:";
+  titleLabel.htmlFor = "task-title-edit";
+  form.appendChild(titleLabel);
+  const title = document.createElement("input");
+  title.id = "task-title-edit";
+  title.name = "title";
+  title.required = true;
+  form.appendChild(title);
+  title.value = project.title;
+
+  const deleteButton = document.createElement("button");
+  deleteButton.type = "button";
+  deleteButton.className = "task-delete-btn";
+  deleteButton.textContent = "Delete";
+  form.appendChild(deleteButton);
+
+  deleteButton.addEventListener("click", () => {
+    projectDatabase.removeProject(project);
+    RenderPage(projectDatabase);
+    dialog.close();
+  });
+
+  return dialog;
+};
+
+const resetProjects = () => {
+  const projectContainer = document.querySelector(".project-container");
+  projectContainer.innerHTML = "";
+};
+
+const renderTask = (task, project) => {
   const taskContainer = document.querySelector(".task-container");
 
   const taskItem = document.createElement("div");

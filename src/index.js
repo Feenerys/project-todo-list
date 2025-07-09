@@ -3,9 +3,7 @@ import { Task } from "./task";
 import { Project } from "./project";
 import { ProjectDatabase } from "./project-database";
 import {
-  RenderPage as RenderHomePage,
-  renderTask,
-  renderProject,
+  RenderPage as RenderHomePage
 } from "./home-page";
 
 const newTask = new Task("First Task", "2025-07-08");
@@ -15,6 +13,7 @@ const newProject = new Project("Project 2");
 
 defaultProject.addTask(newTask);
 defaultProject.addTask(newTask1);
+newProject.addTask(newTask);
 
 const projectDatabase = new ProjectDatabase([defaultProject, newProject]);
 RenderHomePage(projectDatabase);
@@ -53,7 +52,7 @@ const addTaskBtn = () => {
     );
     projectDatabase.currentProject.addTask(task);
     addTaskDialog.close();
-    renderTask(task);
+    RenderHomePage(projectDatabase);
   });
 };
 
@@ -75,10 +74,10 @@ const addProjectBtn = () => {
 
   addProjectForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    const newProj = new Project(title.value);
-    projects.push(newProj);
+    
+    projectDatabase.newProject(title.value);
     addProjectDialog.close();
-    renderProject(newProj);
+    RenderHomePage(projectDatabase);
   });
 };
 
