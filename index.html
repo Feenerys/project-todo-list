@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template</title>
+  <script defer src="main.js"></script></head>
+  <body>
+    <div class="project-sidebar">
+      <h1>Projects</h1>
+      <button class="add-project-btn">+</button>
+      <dialog class="add-project">
+        <form class="add-new-project-form">
+          <h3>Add New Project</h3>
+          <label for="new-project-title">Title:</label>
+          <input id="new-project-title" type="text" required />
+          <button type="submit">Add</button>
+          <button type="button" autofocus class="close-new-project">
+            Close
+          </button>
+        </form>
+      </dialog>
+      <div class="project-container"></div>
+    </div>
+    <div class="main">
+      <h1>Tasks</h1>
+      <button class="add-task-btn">+</button>
+      <dialog class="add-task">
+        <form class="add-new-task-form">
+          <h3>Add New Task</h3>
+          <label for="new-task-title">Title:</label>
+          <input id="new-task-title" type="text" required />
+          <label for="new-task-due-date">Due Date:</label>
+          <input type="date" id="new-task-due-date" required />
+          <label for="new-task-priority">Priority:</label>
+          <select name="priority" id="new-task-priority">
+            <option value="">None</option>
+            <option value="Low">Low</option>
+            <option value="Med">Medium</option>
+            <option value="High">High</option>
+          </select>
+          <label for="new-task-desc">Description:</label>
+          <textarea name="description" id="new-task-desc"></textarea>
+          <button type="submit" class="new-task-create">Add</button>
+          <button type="button" autofocus class="close-new-task">Close</button>
+        </form>
+      </dialog>
+      <div class="task-container"></div>
+    </div>
+  </body>
+</html>
