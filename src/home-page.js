@@ -74,6 +74,18 @@ const projectEdit = (project, projectDatabase) => {
   form.appendChild(title);
   title.value = project.title;
 
+  const saveButton = document.createElement("button");
+  saveButton.type = "submit";
+  saveButton.className = "task-submit-edit-btn";
+  saveButton.textContent = "Save";
+  form.appendChild(saveButton);
+  form.addEventListener("submit", (event) => {
+    project.title = title.value;
+    RenderPage(projectDatabase);
+    dialog.close();
+    event.preventDefault();
+  });
+
   const deleteButton = document.createElement("button");
   deleteButton.type = "button";
   deleteButton.className = "task-delete-btn";
@@ -85,6 +97,8 @@ const projectEdit = (project, projectDatabase) => {
     RenderPage(projectDatabase);
     dialog.close();
   });
+
+  form.appendChild(closeButton);
 
   return dialog;
 };
