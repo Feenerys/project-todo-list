@@ -1,7 +1,7 @@
 import "./styles.css";
 import { Task } from "./task";
 import { Project } from "./project";
-import { RenderPage as RenderHomePage, renderTask } from "./home-page";
+import { RenderPage as RenderHomePage, renderTask , renderProject} from "./home-page";
 
 console.log("Hello World");
 
@@ -12,7 +12,6 @@ const newProject = new Project("Project 2");
 
 defaultProject.addTask(newTask);
 defaultProject.addTask(newTask1);
-
 
 const projects = [defaultProject, newProject];
 const currentProject = projects[0];
@@ -63,6 +62,7 @@ const addProjectBtn = () => {
   const addProjectDialog = document.querySelector(".add-project");
   const closeDialogBtn = document.querySelector(".close-new-project");
   const addProjectForm = document.querySelector(".add-new-project-form");
+  const title = document.querySelector("#new-project-title");
   openDialogBtn.addEventListener("click", () => {
     addProjectDialog.showModal();
   });
@@ -71,7 +71,13 @@ const addProjectBtn = () => {
     addProjectDialog.close();
   });
 
-  addProjectForm.addEventListener("submit", () => {});
+  addProjectForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const newProj = new Project(title.value);
+    projects.push(newProj);
+    addProjectDialog.close();
+    renderProject(newProj);
+  });
 };
 
 addProjectBtn();
