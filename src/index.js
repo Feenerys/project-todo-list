@@ -2,20 +2,18 @@ import "./styles.css";
 import { Task } from "./task";
 import { Project } from "./project";
 import { ProjectDatabase } from "./project-database";
-import {
-  RenderPage as RenderHomePage
-} from "./home-page";
+import { RenderPage as RenderHomePage } from "./home-page";
 
-const newTask = new Task("First Task", "2025-07-08");
-const newTask1 = new Task("First Task1", "2025-07-08");
-const defaultProject = new Project("Inbox");
-const newProject = new Project("Project 2");
+// const newTask = new Task("First Task", "2025-07-08");
+// const newTask1 = new Task("First Task1", "2025-07-08");
+// const defaultProject = new Project("Inbox");
+// const newProject = new Project("Project 2");
 
-defaultProject.addTask(newTask);
-defaultProject.addTask(newTask1);
-newProject.addTask(newTask);
+// defaultProject.addTask(newTask);
+// defaultProject.addTask(newTask1);
+// newProject.addTask(newTask);
 
-const projectDatabase = new ProjectDatabase([defaultProject, newProject]);
+const projectDatabase = new ProjectDatabase();
 RenderHomePage(projectDatabase);
 
 const addTaskBtn = () => {
@@ -74,7 +72,7 @@ const addProjectBtn = () => {
 
   addProjectForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    
+
     projectDatabase.newProject(title.value);
     addProjectDialog.close();
     RenderHomePage(projectDatabase);

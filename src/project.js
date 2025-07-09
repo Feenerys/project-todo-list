@@ -33,4 +33,15 @@ export class Project {
     this._tasks = this.tasks.filter((t) => t.id !== task.id);
     console.log(`Removed task: ${task.id}`);
   }
+
+  toJSON() {
+    return {
+      title: this.title,
+      tasks: this.tasks.map((t) => t.toJSON()),
+    };
+  }
+
+  importTasks(tasks) {
+    this._tasks = tasks;
+  }
 }
