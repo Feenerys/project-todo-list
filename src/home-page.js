@@ -40,7 +40,7 @@ export const renderTask = (task, project) => {
 
   const taskStatus = document.createElement("input");
   taskStatus.type = "checkbox";
-  taskStatus.id = "task-status";
+  taskStatus.id = `task-status-${task.id}`;
   taskItem.appendChild(taskStatus);
   taskStatus.addEventListener("click", () => {
     task.status = taskStatus.checked;
@@ -54,7 +54,7 @@ export const renderTask = (task, project) => {
   taskDueDate.className = "task-due-date";
   taskItem.appendChild(taskDueDate);
 
-  taskTitle.htmlFor = "task-status";
+  taskTitle.htmlFor = `task-status-${task.id}`;
   taskTitle.textContent = task.title;
   taskDueDate.textContent = task.dueDate;
   taskStatus.checked = task.status;
