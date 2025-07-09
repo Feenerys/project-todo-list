@@ -1,19 +1,19 @@
 import { format } from "date-fns";
 
-export const RenderPage = (projects, currentProject) => {
-  for (let project of projects) {
-    renderProject(project);
+export const RenderPage = (projectDatabase) => {
+  for (let project of projectDatabase.projects) {
+    renderProject(project, projectDatabase);
   }
-  
-  for (let task of currentProject.tasks) {
-    renderTask(task, currentProject);
-    // Potential bad practice here where in order to delete task 
-    // I have to pass the project into the task element to give to the 
+
+  for (let task of projectDatabase.currentProject.tasks) {
+    renderTask(task, projectDatabase.currentProject);
+    // Potential bad practice here where in order to delete task
+    // I have to pass the project into the task element to give to the
     // task remove function
   }
 };
 
-export const renderProject = (project) => {
+export const renderProject = (project, projectDatabase) => {
   const projectContainer = document.querySelector(".project-container");
 
   const projectItem = document.createElement("button");
@@ -22,8 +22,9 @@ export const renderProject = (project) => {
 
   projectItem.addEventListener("click", () => {
     resetAllTasks();
-    for (let task of project.tasks) {
-      renderTask(task, project);
+    projectDatabase.currentProject = project;
+    for (let task of projectDatabase.currentProject.tasks) {
+      renderTask(task, projectDatabase.currentProject);
     }
   });
 

@@ -1,9 +1,12 @@
 import "./styles.css";
 import { Task } from "./task";
 import { Project } from "./project";
-import { RenderPage as RenderHomePage, renderTask , renderProject} from "./home-page";
-
-console.log("Hello World");
+import { ProjectDatabase } from "./project-database";
+import {
+  RenderPage as RenderHomePage,
+  renderTask,
+  renderProject,
+} from "./home-page";
 
 const newTask = new Task("First Task", "2025-07-08");
 const newTask1 = new Task("First Task1", "2025-07-08");
@@ -13,9 +16,8 @@ const newProject = new Project("Project 2");
 defaultProject.addTask(newTask);
 defaultProject.addTask(newTask1);
 
-const projects = [defaultProject, newProject];
-const currentProject = projects[0];
-RenderHomePage(projects, currentProject);
+const projectDatabase = new ProjectDatabase([defaultProject, newProject]);
+RenderHomePage(projectDatabase);
 
 const addTaskBtn = () => {
   const openDialogBtn = document.querySelector(".add-task-btn");
@@ -49,7 +51,7 @@ const addTaskBtn = () => {
       newTaskPriority.value,
       newTaskDesc.value,
     );
-    defaultProject.addTask(task);
+    projectDatabase.currentProject.addTask(task);
     addTaskDialog.close();
     renderTask(task);
   });
