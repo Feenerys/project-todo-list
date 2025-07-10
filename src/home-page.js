@@ -49,6 +49,7 @@ const projectEdit = (project, projectDatabase) => {
   const dialog = document.createElement("dialog");
   dialog.className = "edit-project";
   const form = document.createElement("form");
+  form.method = "dialog";
   dialog.appendChild(form);
   const header = document.createElement("h3");
   header.textContent = `Edit ${project.title}`;
@@ -79,11 +80,10 @@ const projectEdit = (project, projectDatabase) => {
   saveButton.className = "task-submit-edit-btn";
   saveButton.textContent = "Save";
   form.appendChild(saveButton);
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", () => {
     project.title = title.value;
     RenderPage(projectDatabase);
     dialog.close();
-    event.preventDefault();
     projectDatabase.saveProjects();
   });
 
@@ -164,6 +164,7 @@ const taskEdit = (task, editButton, project, projectDatabase) => {
   const dialog = document.createElement("dialog");
   dialog.className = "edit-task-btn";
   const form = document.createElement("form");
+  form.method = "dialog";
   dialog.appendChild(form);
   const header = document.createElement("h3");
   header.textContent = "Edit Task";
@@ -250,7 +251,7 @@ const taskEdit = (task, editButton, project, projectDatabase) => {
   saveButton.className = "task-submit-edit-btn";
   saveButton.textContent = "Save";
   form.appendChild(saveButton);
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", () => {
     task.status = status.checked;
     task.title = title.value;
     task.dueDate = dueDate.value;
@@ -259,7 +260,6 @@ const taskEdit = (task, editButton, project, projectDatabase) => {
     dialog.close();
     removeTask(task);
     renderTask(task);
-    event.preventDefault();
     projectDatabase.saveProjects();
   });
 

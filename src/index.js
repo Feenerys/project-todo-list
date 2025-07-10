@@ -30,8 +30,7 @@ const addTaskBtn = () => {
 
   const addNewTaskForm = document.querySelector(".add-new-task-form");
 
-  addNewTaskForm.addEventListener("submit", (event) => {
-    event.preventDefault();
+  addNewTaskForm.addEventListener("submit", () => {
     const task = new Task(
       newTaskTitle.value,
       newTaskDueDate.value,
@@ -61,9 +60,7 @@ const addProjectBtn = () => {
     addProjectDialog.close();
   });
 
-  addProjectForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
+  addProjectForm.addEventListener("submit", () => {
     projectDatabase.newProject(title.value);
     addProjectDialog.close();
     RenderHomePage(projectDatabase);
